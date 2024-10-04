@@ -1,4 +1,4 @@
-package com.example.isar_database_project
+package com.example.google_translator
 
 import io.flutter.embedding.android.FlutterActivity
 

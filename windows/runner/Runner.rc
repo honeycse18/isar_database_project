@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "isar_database_project" "\0"
+            VALUE "FileDescription", "google_translator" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "isar_database_project" "\0"
+            VALUE "InternalName", "google_translator" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2024 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "isar_database_project.exe" "\0"
-            VALUE "ProductName", "isar_database_project" "\0"
+            VALUE "OriginalFilename", "google_translator.exe" "\0"
+            VALUE "ProductName", "google_translator" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

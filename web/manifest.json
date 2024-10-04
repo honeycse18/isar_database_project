@@ -1,6 +1,6 @@
 {
-    "name": "isar_database_project",
-    "short_name": "isar_database_project",
+    "name": "google_translator",
+    "short_name": "google_translator",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
