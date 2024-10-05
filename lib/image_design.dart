@@ -16,31 +16,57 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
   XFile? _mainImage;
   List<XFile> _images = [];
 
-  // Image picking function
+  // Image picking function with a 4-image limit
   Future<void> pickImages() async {
     final pickedFiles = await _picker.pickMultiImage();
+
     if (pickedFiles != null) {
       setState(() {
-        _images = pickedFiles;
+        // Limit the number of picked images to 4
+        if (pickedFiles.length > 4) {
+          _images = pickedFiles.sublist(0, 4); // Only allow 4 additional images
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("You can upload a maximum of 4 images.")),
+          );
+        } else {
+          _images = pickedFiles;
+        }
       });
     }
   }
 
   // Function to save the images to the Isar Database
   Future<void> _saveToDatabase() async {
+    // Ensure a main image is selected
+    if (_mainImage == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Please select a main image.")),
+      );
+      return;
+    }
+
+    // Ensure exactly 4 images are selected
+    if (_images.length != 4) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Please select exactly 4 images.")),
+      );
+      return;
+    }
+
     final directory = await getApplicationDocumentsDirectory();
     final isar = await Isar.open(
       [ProfileImageSchema],
       directory: directory.path,
     );
 
+    // Save main image and exactly 4 additional images
     final profileImage = ProfileImage()
       ..mainPhoto = _mainImage?.path ?? ''
-      ..photo2 = _images.length > 1 ? _images[1].path : null
-      ..photo3 = _images.length > 2 ? _images[2].path : null
-      ..photo4 = _images.length > 3 ? _images[3].path : null
-      ..photo5 = _images.length > 4 ? _images[4].path : null;
-
+      ..photo2 = _images[0].path // First additional image
+      ..photo3 = _images[1].path // Second additional image
+      ..photo4 = _images[2].path // Third additional image
+      ..photo5 = _images[3].path; // Fourth additional image
+    print(profileImage.photo5);
     await isar.writeTxn(() async {
       await isar.profileImages.put(profileImage);
     });
@@ -185,7 +211,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
                               Icons.navigate_before, () {}),
                           _navigationButton(
                               context, 'Next Step', Icons.navigate_next, () {
-                            _saveToDatabase;
+                            _saveToDatabase(); // Invoke the function
                           }),
                         ],
                       ),

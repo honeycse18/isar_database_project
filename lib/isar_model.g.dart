@@ -37,8 +37,13 @@ const ProfileImageSchema = CollectionSchema(
       name: r'photo4',
       type: IsarType.string,
     ),
-    r'profileId': PropertySchema(
+    r'photo5': PropertySchema(
       id: 4,
+      name: r'photo5',
+      type: IsarType.string,
+    ),
+    r'profileId': PropertySchema(
+      id: 5,
       name: r'profileId',
       type: IsarType.string,
     )
@@ -81,6 +86,7 @@ int _profileImageEstimateSize(
   bytesCount += 3 + object.photo2!.length * 3;
   bytesCount += 3 + object.photo3!.length * 3;
   bytesCount += 3 + object.photo4!.length * 3;
+  bytesCount += 3 + object.photo5!.length * 3;
   bytesCount += 3 + object.profileId.length * 3;
   return bytesCount;
 }
@@ -95,7 +101,8 @@ void _profileImageSerialize(
   writer.writeString(offsets[1], object.photo2);
   writer.writeString(offsets[2], object.photo3);
   writer.writeString(offsets[3], object.photo4);
-  writer.writeString(offsets[4], object.profileId);
+  writer.writeString(offsets[4], object.photo5);
+  writer.writeString(offsets[5], object.profileId);
 }
 
 ProfileImage _profileImageDeserialize(
@@ -110,7 +117,8 @@ ProfileImage _profileImageDeserialize(
   object.photo2 = reader.readString(offsets[1]);
   object.photo3 = reader.readString(offsets[2]);
   object.photo4 = reader.readString(offsets[3]);
-  object.profileId = reader.readString(offsets[4]);
+  object.photo5 = reader.readString(offsets[4]);
+  object.profileId = reader.readString(offsets[5]);
   return object;
 }
 
@@ -130,6 +138,8 @@ P _profileImageDeserializeProp<P>(
     case 3:
       return (reader.readString(offset)) as P;
     case 4:
+      return (reader.readString(offset)) as P;
+    case 5:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -928,6 +938,141 @@ extension ProfileImageQueryFilter
     });
   }
 
+  QueryBuilder<ProfileImage, ProfileImage, QAfterFilterCondition> photo5EqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'photo5',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ProfileImage, ProfileImage, QAfterFilterCondition>
+      photo5GreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'photo5',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ProfileImage, ProfileImage, QAfterFilterCondition>
+      photo5LessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'photo5',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ProfileImage, ProfileImage, QAfterFilterCondition> photo5Between(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'photo5',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ProfileImage, ProfileImage, QAfterFilterCondition>
+      photo5StartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'photo5',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ProfileImage, ProfileImage, QAfterFilterCondition>
+      photo5EndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'photo5',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ProfileImage, ProfileImage, QAfterFilterCondition>
+      photo5Contains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'photo5',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ProfileImage, ProfileImage, QAfterFilterCondition> photo5Matches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'photo5',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ProfileImage, ProfileImage, QAfterFilterCondition>
+      photo5IsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'photo5',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ProfileImage, ProfileImage, QAfterFilterCondition>
+      photo5IsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'photo5',
+        value: '',
+      ));
+    });
+  }
+
   QueryBuilder<ProfileImage, ProfileImage, QAfterFilterCondition>
       profileIdEqualTo(
     String value, {
@@ -1121,6 +1266,18 @@ extension ProfileImageQuerySortBy
     });
   }
 
+  QueryBuilder<ProfileImage, ProfileImage, QAfterSortBy> sortByPhoto5() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'photo5', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ProfileImage, ProfileImage, QAfterSortBy> sortByPhoto5Desc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'photo5', Sort.desc);
+    });
+  }
+
   QueryBuilder<ProfileImage, ProfileImage, QAfterSortBy> sortByProfileId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'profileId', Sort.asc);
@@ -1196,6 +1353,18 @@ extension ProfileImageQuerySortThenBy
     });
   }
 
+  QueryBuilder<ProfileImage, ProfileImage, QAfterSortBy> thenByPhoto5() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'photo5', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ProfileImage, ProfileImage, QAfterSortBy> thenByPhoto5Desc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'photo5', Sort.desc);
+    });
+  }
+
   QueryBuilder<ProfileImage, ProfileImage, QAfterSortBy> thenByProfileId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'profileId', Sort.asc);
@@ -1239,6 +1408,13 @@ extension ProfileImageQueryWhereDistinct
     });
   }
 
+  QueryBuilder<ProfileImage, ProfileImage, QDistinct> distinctByPhoto5(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'photo5', caseSensitive: caseSensitive);
+    });
+  }
+
   QueryBuilder<ProfileImage, ProfileImage, QDistinct> distinctByProfileId(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1276,6 +1452,12 @@ extension ProfileImageQueryProperty
   QueryBuilder<ProfileImage, String, QQueryOperations> photo4Property() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'photo4');
+    });
+  }
+
+  QueryBuilder<ProfileImage, String, QQueryOperations> photo5Property() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'photo5');
     });
   }
 
